@@ -37,7 +37,7 @@ app.get("/regentoken", (req, res) => {
           },
           process.env.SECRET,
           {
-            expiresIn: "1d",
+            expiresIn: "1h",
           }
         );
         res.send({ "regenerated token": token });

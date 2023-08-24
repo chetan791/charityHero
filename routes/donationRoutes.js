@@ -42,11 +42,9 @@ donationRouter.get("/request", async (req, res) => {
     matchStage.raised = 0;
   }
   if (searched) {
-    matchStage.$or = [
-      { name: { $regex: searched, $options: "i" } },
-      { description: { $regex: searched, $options: "i" } },
-    ];
+    matchStage.$or = [{ name: { $regex: searched, $options: "i" } }];
   }
+  const getCount = await donationRequestModel.aggregate(pipeline);
   let current = +page || 1;
   pipeline.push({ $skip: (current - 1) * 5 }, { $limit: 5 });
   pipeline.push({ $match: matchStage });
@@ -59,7 +57,7 @@ donationRouter.get("/request", async (req, res) => {
     const donationRequests = await donationRequestModel.aggregate(pipeline);
     res
       .status(200)
-      .json({ data: donationRequests, totalCount: donationRequests.length });
+      .json({ data: donationRequests, totalCount: getCount.length });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }

@@ -52,7 +52,7 @@ userRouter.post("/login", async (req, res) => {
             },
             process.env.SECRET,
             {
-              expiresIn: "1d",
+              expiresIn: "1h",
             }
           );
           let rtoken = jwt.sign(
