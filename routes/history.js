@@ -23,8 +23,8 @@ historyRouter.post("/create", async (req, res) => {
   }
 });
 
-historyRouter.get("/get", auth, async (req, res) => {
-  const { donationRequestID } = req.body;
+historyRouter.get("/get/:donationRequestID", async (req, res) => {
+  const { donationRequestID } = req.params;
   try {
     const donationHistory = await donationHistoryModel.find({
       userID: req.body.userID,
