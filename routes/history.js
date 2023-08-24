@@ -27,7 +27,6 @@ historyRouter.get("/get/:donationRequestID", async (req, res) => {
   const { donationRequestID } = req.params;
   try {
     const donationHistory = await donationHistoryModel.find({
-      userID: req.body.userID,
       donationRequestID: donationRequestID,
     });
     res.status(200).json(donationHistory);
