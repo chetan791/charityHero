@@ -42,7 +42,7 @@ donationRouter.get("/request", async (req, res) => {
     matchStage.raised = 0;
   }
   if (searched) {
-    matchStage = { title: { $regex: searched, $options: "i" } };
+    matchStage.title = { $regex: searched, $options: "i" };
   }
   pipeline.push({ $match: matchStage });
   let getCount = [];
