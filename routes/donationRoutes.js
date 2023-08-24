@@ -44,17 +44,27 @@ donationRouter.get("/request", async (req, res) => {
   if (searched) {
     matchStage.$or = [{ name: { $regex: searched, $options: "i" } }];
   }
-  const getCount = await donationRequestModel.aggregate(pipeline);
+  pipeline.push({ $match: matchStage });
+  let getCount = [];
+  if (pipeline.length > 0) {
+    getCount = await donationRequestModel.aggregate(pipeline);
+  } else {
+    getCount = await donationRequestModel.find();
+  }
   let current = +page || 1;
   pipeline.push({ $skip: (current - 1) * 5 }, { $limit: 5 });
-  pipeline.push({ $match: matchStage });
 
   if (order) {
     pipeline.push({ $sort: { goal: order == "asc" ? 1 : -1 } });
   }
 
   try {
-    const donationRequests = await donationRequestModel.aggregate(pipeline);
+    let donationRequests = [];
+    if (pipeline.length > 0) {
+      donationRequests = await donationRequestModel.aggregate(pipeline);
+    } else {
+      donationRequests = await donationRequestModel.find();
+    }
     res
       .status(200)
       .json({ data: donationRequests, totalCount: getCount.length });
