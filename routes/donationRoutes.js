@@ -102,20 +102,20 @@ donationRouter.post("/create", auth, async (req, res) => {
 });
 
 // edit a specific donation request
-donationRouter.patch("/edit/:id", auth, async (req, res) => {
+donationRouter.patch("/edit/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const isuser = await donationRequestModel.findById(id);
-    if (isuser.userID !== req.body.userID) {
-      res.status(401).json({ message: "Not Authorized" });
-    } else {
-      const donationRequest = await donationRequestModel.findByIdAndUpdate(
-        id,
-        req.body,
-        { new: true }
-      );
-      res.status(200).json("Donation Request updated successfully");
-    }
+    // const isuser = await donationRequestModel.findById(id);
+    // if (isuser.userID !== req.body.userID) {
+    //   res.status(401).json({ message: "Not Authorized" });
+    // } else {
+    const donationRequest = await donationRequestModel.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true }
+    );
+    res.status(200).json("Donation Request updated successfully");
+    // }
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }

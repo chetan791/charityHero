@@ -52,7 +52,7 @@ userRouter.post("/login", async (req, res) => {
             },
             process.env.SECRET,
             {
-              expiresIn: "1h",
+              expiresIn: "7h",
             }
           );
           let rtoken = jwt.sign(
@@ -66,7 +66,14 @@ userRouter.post("/login", async (req, res) => {
               expiresIn: "7d",
             }
           );
-          res.status(200).json({ message: "Login successful", token, rtoken });
+          res.status(200).json({
+            message: "Login successful",
+            token,
+            rtoken,
+            name: user.name,
+            organizationName: user.organization,
+            id: user._id,
+          });
         } else {
           res.status(401).json({ message: "Invalid password" });
         }

@@ -37,10 +37,15 @@ app.get("/regentoken", (req, res) => {
           },
           process.env.SECRET,
           {
-            expiresIn: "1h",
+            expiresIn: "7h",
           }
         );
-        res.send({ "regenerated token": token });
+        res.send({
+          "regenerated token": token,
+          name: decoded.name,
+          id: decoded.id,
+          organizationName: decoded.organizationName,
+        });
       }
     });
   }
