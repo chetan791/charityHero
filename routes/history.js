@@ -16,7 +16,7 @@ historyRouter.post("/create", async (req, res) => {
       userID,
       donationRequestID,
     });
-    donationHistory.save();
+    await donationHistory.save();
     res.status(201).json(donationHistory);
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
