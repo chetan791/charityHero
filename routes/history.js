@@ -4,13 +4,22 @@ const auth = require("../middleware/auth");
 const historyRouter = express.Router();
 
 historyRouter.post("/create", async (req, res) => {
-  const { donor, amount, date, time, message, userID, donationRequestID } =
-    req.body;
+  const {
+    donor,
+    amount,
+    date,
+    time,
+    phone,
+    message,
+    userID,
+    donationRequestID,
+  } = req.body;
   try {
     const donationHistory = await donationHistoryModel({
       donor,
       amount,
       date,
+      phone,
       time,
       message,
       userID,
