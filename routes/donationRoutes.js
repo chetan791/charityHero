@@ -111,8 +111,7 @@ donationRouter.patch("/edit/:id", async (req, res) => {
     // } else {
     const donationRequest = await donationRequestModel.findByIdAndUpdate(
       id,
-      req.body,
-      { new: true }
+      req.body
     );
     res.status(200).json("Donation Request updated successfully");
     // }
