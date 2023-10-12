@@ -88,7 +88,7 @@ donationRouter.get("/", auth, async (req, res) => {
 donationRouter.post("/create", auth, async (req, res) => {
   const { title } = req.body;
   try {
-    existing_title = donationRequestModel.findOne({ title: title });
+    let existing_title = await donationRequestModel.findOne({ title: title });
     if (existing_title) {
       res.status(400).json({ message: "The donation Request already exist" });
     } else {
